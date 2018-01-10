@@ -12,8 +12,7 @@ RUN apk update && \
 
 RUN git clone --depth=1 https://github.com/SickRage/SickRage.git /app/sickrage
 
-# copy local files
-# COPY root/ /
+ADD config.ini /config/config.ini 
 
 # ports and volumes
 EXPOSE 8081
