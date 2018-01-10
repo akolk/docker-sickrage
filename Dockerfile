@@ -10,13 +10,13 @@ RUN apk update && \
     apk upgrade && \
     apk add git
 
-RUN \
- echo "**** install app ****" && \
- git clone --depth=1 https://github.com/SickRage/SickRage.git /app/sickrage
+RUN git clone --depth=1 https://github.com/SickRage/SickRage.git /app/sickrage
 
 # copy local files
-COPY root/ /
+# COPY root/ /
 
 # ports and volumes
 EXPOSE 8081
 VOLUME /config /downloads /tv
+
+CMD ["python", "/app/sickrage/SickBeard.py", "--datadir", "/config"]
