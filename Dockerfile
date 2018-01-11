@@ -8,14 +8,15 @@ ENV PYTHONIOENCODING="UTF-8"
 
 RUN apk update && \
     apk upgrade && \
-    apk add git
+    apk add git && \
+    rm -rf /var/cache/apk/*
 
 ## Clean apk cache files
 RUN rm -rf /var/cache/apk/*
 
 RUN git clone --depth=1 https://github.com/SickRage/SickRage.git /app/sickrage
 
-ADD config.ini /config/config.ini 
+ADD config.ini /config/config.ini
 
 # ports and volumes
 EXPOSE 8081
