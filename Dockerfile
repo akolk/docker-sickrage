@@ -11,9 +11,6 @@ RUN apk update && \
     apk add git && \
     rm -rf /var/cache/apk/*
 
-## Clean apk cache files
-RUN rm -rf /var/cache/apk/*
-
 RUN git clone --depth=1 https://github.com/SickRage/SickRage.git /app/sickrage
 
 ADD config.ini /config/config.ini
