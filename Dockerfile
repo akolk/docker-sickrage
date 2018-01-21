@@ -17,6 +17,6 @@ ADD config.ini /config/config.ini
 
 # ports and volumes
 EXPOSE 8081
-VOLUME /config /downloads /tv
+VOLUME /config /volumes/media
 
 CMD ["python", "/app/sickrage/SickBeard.py", "--datadir", "/config"]
