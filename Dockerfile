@@ -1,10 +1,16 @@
-FROM python:2.7-alpine3.7
+ARG target=amd64
+FROM $target/python:2.7-alpine3.7
 
 # set version label
 LABEL maintainer="carlosedp"
 
+ARG arch=amd64
+ENV ARCH=$arch
+
 # set python to use utf-8 rather than ascii
 ENV PYTHONIOENCODING="UTF-8"
+
+COPY tmp/qemu-$ARCH-static /usr/bin/qemu-$ARCH-static
 
 RUN apk update && \
     apk upgrade && \

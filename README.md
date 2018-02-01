@@ -1,36 +1,41 @@
-[linuxserverurl]: https://linuxserver.io
-[forumurl]: https://forum.linuxserver.io
-[ircurl]: https://www.linuxserver.io/irc/
-[podcasturl]: https://www.linuxserver.io/podcast/
-[appurl]: https://sickrage.github.io/
-[hub]: https://hub.docker.com/r/linuxserver/sickrage/
+[hub]: https://hub.docker.com/r/carlosedp/sickrage/
 
-[![linuxserver.io](https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/linuxserver_medium.png)][linuxserverurl]
+# carlosedp/sickrage
 
-The [LinuxServer.io][linuxserverurl] team brings you another container release featuring easy user mapping and community support. Find us for support at:
-* [forum.linuxserver.io][forumurl]
-* [IRC][ircurl] on freenode at `#linuxserver.io`
-* [Podcast][podcasturl] covers everything to do with getting the most from your Linux Server plus a focus on all things Docker and containerisation!
-
-# linuxserver/sickrage
-[![](https://images.microbadger.com/badges/version/linuxserver/sickrage.svg)](https://microbadger.com/images/linuxserver/sickrage "Get your own version badge on microbadger.com")[![](https://images.microbadger.com/badges/image/linuxserver/sickrage.svg)](https://microbadger.com/images/linuxserver/sickrage "Get your own image badge on microbadger.com")[![Docker Pulls](https://img.shields.io/docker/pulls/linuxserver/sickrage.svg)][hub][![Docker Stars](https://img.shields.io/docker/stars/linuxserver/sickrage.svg)][hub][![Build Status](https://ci.linuxserver.io/buildStatus/icon?job=Docker-Builders/x86-64/x86-64-sickrage)](https://ci.linuxserver.io/job/Docker-Builders/job/x86-64/job/x86-64-sickrage/)
+[![Build Status](https://travis-ci.org/carlosedp/docker-sickrage.svg?branch=master)](https://travis-ci.org/carlosedp/docker-sickrage)[![](https://images.microbadger.com/badges/image/carlosedp/sickrage.svg)](https://microbadger.com/images/carlosedp/sickrage "Get your own image badge on microbadger.com")
 
 Automatic Video Library Manager for TV Shows. It watches for new episodes of your favorite shows, and when they are posted it does its magic. [Sickrage](https://sickrage.github.io/)
 
-[![sickrage](https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/sickrage-banner.png)][appurl]
-
-
 ## Usage
 
+### Media Folder Structure
+
+The containers expect a similar structure with Downloads, Incomplete, Movies, TVShows and Concerts directories on your drive.
+
+    /mnt/external/Downloads/
+                            /Incomplete
+                            /Movies
+                            /TVShows
+                  /Movies/
+                  /TVShows/
+                  /Concerts/
+
+To make all applications behave similarly, the external volume will be mounted on `/volumes/media` in the container.
+
+    export MEDIA=/mnt/1TB-WDred
+
 ```
-docker create --name=sickrage \
--v <path to config>:/config \
--v <path to downloads>:/downloads \
--v <path to tv-shows>:/tv \
--e PGID=<gid> -e PUID=<uid>  \
--e TZ=<timezone> \
--p 8081:8081 \
-linuxserver/sickrage
+    docker volume create sickrage_config
+    docker run -d \
+    --name=sickrage \
+    --restart=unless-stopped \
+    --net=mediaserver \
+    -v sickrage_config:/config \
+    -v $MEDIA:/volumes/media \
+    -v /etc/localtime:/etc/localtime:ro \
+    -e PGID=1000 -e PUID=1000  \
+    -p 8081:8081 \
+    carlosedp/sickrage
 ```
 
 ## Parameters
@@ -42,14 +47,12 @@ http://192.168.x.x:8080 would show you what's running INSIDE the container on po
 
 
 * `-p 8081` - the port(s)
-* `-v /config` - where sickrage should store config files.
-* `-v /downloads` - your downloads folder
-* `-v /tv` - your tv-shows folder
+* `-v /config` - where sickrage should store config files. Defaults to a Docker volume
+* `-v $MEDIA:/volumes/media` - your media folder.
 * `-e PGID` for GroupID - see below for explanation
 * `-e PUID` for UserID - see below for explanation
-* `-e TZ` for timezone information, eg Europe/London
 
-It is based on alpine linux with s6 overlay, for shell access whilst the container is running do `docker exec -it sickrage /bin/bash`.
+It is based on alpine linux with s6 overlay, for shell access whilst the container is running do `docker exec -it sickrage /bin/sh`.
 
 ### User / Group Identifiers
 
@@ -66,7 +69,6 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 
 Web interface is at `<your ip>:8081` , set paths for downloads, tv-shows to match docker mappings via the webui.
 
-
 ## Info
 
 * To monitor the logs of the container in realtime `docker logs -f sickrage`.
@@ -78,19 +80,3 @@ Web interface is at `<your ip>:8081` , set paths for downloads, tv-shows to matc
 * image version number
 
 `docker inspect -f '{{ index .Config.Labels "build_version" }}' linuxserver/sickrage`
-
-
-## Versions
-
-+ **12.12.17:** Rebase to alpine 3.7
-+ **06.08.17:** Internal git pull instead of at runtime.
-+ **25.05.17:** Rebase to alpine 3.6
-+ **07.02.17:** Rebase to alpine 3.5
-+ **14.10.16:** Add version layer information.
-+ **30.09.16:** Fix umask.
-+ **09.09.16:** Add layer badges to README.
-+ **28.08.16:** Add badges to README.
-+ **08.08.16:** Rebase to alpine linux.
-+ **30.12.15:** Build later version of unrar from source, removed uneeded mako package.
-+ **20.11.15:** Updated to new repo, by SickRage Team.
-+ **15.10.15:** Initial Release.
