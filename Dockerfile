@@ -12,10 +12,6 @@ ENV PYTHONIOENCODING="UTF-8"
 # > At the moment, setting "LANG=C" on a Linux system *fundamentally breaks Python 3*, and that's not OK.
 ENV LANG C.UTF-8
 
-# install ca-certificates so that HTTPS works consistently
-# the other runtime dependencies for Python are installed later
-RUN apk add --no-cache ca-certificates
-
 COPY tmp/qemu-$ARCH-static /usr/bin/qemu-$ARCH-static
 
 RUN apk update && \
