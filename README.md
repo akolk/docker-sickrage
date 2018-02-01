@@ -2,7 +2,7 @@
 
 # carlosedp/sickrage
 
-[![Build Status](https://travis-ci.org/carlosedp/docker-sickrage.svg?branch=master)](https://travis-ci.org/carlosedp/docker-sickrage)[![](https://images.microbadger.com/badges/image/carlosedp/sickrage.svg)](https://microbadger.com/images/carlosedp/sickrage "Get your own image badge on microbadger.com")
+[![Build Status](https://travis-ci.org/carlosedp/docker-sickrage.svg?branch=master)](https://travis-ci.org/carlosedp/docker-sickrage) [![](https://images.microbadger.com/badges/image/carlosedp/sickrage.svg)](https://microbadger.com/images/carlosedp/sickrage "Get your own image badge on microbadger.com")
 
 Automatic Video Library Manager for TV Shows. It watches for new episodes of your favorite shows, and when they are posted it does its magic. [Sickrage](https://sickrage.github.io/)
 

@@ -14,7 +14,7 @@ env:
     # ARCH = qemu binary to be downloaded from https://github.com/multiarch/qemu-user-static/releases
     # TAG = Tag to be applied to the image when upload to DockerHub
     - TARGET=amd64 ARCH=amd64 TAG=amd64
-    - TARGET=aarch64 ARCH=aarch64 TAG=arm64
+    - TARGET=arm64v8 ARCH=aarch64 TAG=arm64
     - TARGET=arm32v6 ARCH=arm TAG=arm
 
 script:

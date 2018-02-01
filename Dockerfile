@@ -12,7 +12,7 @@ ENV PYTHONIOENCODING="UTF-8"
 # > At the moment, setting "LANG=C" on a Linux system *fundamentally breaks Python 3*, and that's not OK.
 ENV LANG C.UTF-8
 
-COPY tmp/qemu-$ARCH-static /usr/bin/qemu-$ARCH-static
+COPY .blank tmp/qemu-$ARCH-static* /usr/bin/
 
 RUN apk update && \
     apk upgrade && \
