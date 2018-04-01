@@ -16,7 +16,7 @@ COPY .blank tmp/qemu-$ARCH-static* /usr/bin/
 
 RUN apk update && \
     apk upgrade && \
-    apk add git python2 && \
+    apk add git python2 nodejs && \
     rm -rf /var/cache/apk/*
 
 RUN git clone --depth=1 https://github.com/SickRage/SickRage.git /app/sickrage
