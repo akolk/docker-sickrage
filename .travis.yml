@@ -7,7 +7,7 @@ language: bash
 
 env:
   global:
-    - IMAGE=carlosedp/sickrage
+    - IMAGE=akolk/sickrage
     - QEMU_VERSION=v2.9.1-1
   matrix:
     # TARGET = Base image architecture to be used
